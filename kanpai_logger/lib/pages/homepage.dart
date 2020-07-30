@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart'; 
+import 'package:flutter/widgets.dart';
+import 'package:kanpailogger/utils/kanpaiTheme.dart'; 
 
 class HomePage extends StatefulWidget {
   @override
@@ -16,37 +17,50 @@ class _homepageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home : Scaffold(
-        backgroundColor: bgColor,
-        appBar: AppBar(
+      theme: kanpaiTheme(),
+      home: buildHome(),
+    );
+  }
+
+  Widget buildHome() {
+    return WillPopScope(
+        onWillPop: () async => false,
+        child: Scaffold(
+          appBar: AppBar(
             title: Image(
               image: new AssetImage(
-                "assets/images/mSETlogo.png",
+                "assets/images/logo.jpg",
               ),
+              height: 50.0, // TODO DOES THIS LOOK GOOD ON TABLET??
             ),
-            backgroundColor: barColor, //Colors.teal[300],
             centerTitle: true,
-          leading: new IconButton(
-            icon: new Icon(Icons.arrow_back, color: Colors.white),
-            onPressed: (){
-              print("Going back");
-              Navigator.of(context).pop();
-            }
-          )
+          ),
+          drawer: Drawer(
+            child: ListView(
+              children: <Widget>[
+                Divider(),
+                ListTile(
+                    title: Text("User"),
+                    trailing: Icon(Icons.account_circle),
+                    onTap: () {
+                      //Navigate to user page.
+                      print("Navigating to the User page");
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => HomePage()));
+                    }),
+                Divider(),
+                ListTile(
+                    title: Text("Logout"),
+                    trailing: Icon(Icons.exit_to_app),
+                    onTap: () {
+                      //appAuth.logout(context);
+                    }),
+                Divider(),
+              ],
+            ),
+          ),
+          // backgroundColor: DarkTheme.bg,
         ),
-        body: Align(
-          alignment: Alignment.center,
-          child: RichText(
-            text: TextSpan(
-              text: 'Settings Page',
-              style: TextStyle(
-                  color: fontColor,
-                fontSize: 30
-              ),
-            )
-          )
-        )
-      ),
-    );
+      );
   }
 }

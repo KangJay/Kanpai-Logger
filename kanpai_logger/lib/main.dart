@@ -10,14 +10,16 @@ void main() async {
   3. Upon subsequent logins, check local storage if the credentials exist.
   4. If so, take them to the main homepage. 
   */
+  Widget defaultHome = new HomePage(); 
   runApp(MaterialApp(
     title: 'Sushi Kanpai Timelogger',
     theme: kanpaiTheme(), 
-    home: new HomePage(),
+    home: defaultHome,
     routes: <String, WidgetBuilder> {
       /*
       Build new routes like this: '/pagename' : (BuildContext context) => new pagename(), 
       */
+      '/home': (BuildContext context) => defaultHome, 
     }
     )); //Material App 
 }
